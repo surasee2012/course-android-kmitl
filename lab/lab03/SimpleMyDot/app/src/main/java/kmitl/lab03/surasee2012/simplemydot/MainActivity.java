@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity implements Dot.OnDotChangedL
     private DotView dotView;
     private Dot dot;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,10 +27,10 @@ public class MainActivity extends AppCompatActivity implements Dot.OnDotChangedL
 
     public void onRandomDot(View view) {
         Random random = new Random();
-        int centerX = random.nextInt(1000);
-        int centerY = random.nextInt(1000);
-        this.dot.setCenterX(5);
-        this.dot.setCenterY(5);
+        int centerX = random.nextInt(1400);
+        int centerY = random.nextInt(1800);
+        this.dot.setCenterX(centerX);
+        this.dot.setCenterY(centerY);
     }
 
     @Override
