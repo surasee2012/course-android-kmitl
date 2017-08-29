@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import java.util.List;
+import java.util.Random;
 
 import kmitl.lab03.surasee2012.simplemydot.model.Dot;
 
@@ -19,6 +20,7 @@ import kmitl.lab03.surasee2012.simplemydot.model.Dot;
 public class DotView extends View {
     private Paint paint;
     private List<Dot> listDot;
+    private List<Integer> listColor;
 
     public DotView(Context context) {
         super(context);
@@ -38,20 +40,19 @@ public class DotView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (this.listDot != null) {
+        if (this.listDot != null && this.listColor != null) {
             for (int i=0;i<this.listDot.size();i++) {
-                int color = i % 6;
-                if (color == 0) {
+                if (listColor.get(i) == 0) {
                     paint.setColor(Color.RED);
-                } else if (color == 1) {
+                } else if (listColor.get(i) == 1) {
                     paint.setColor(Color.BLUE);
-                } else if (color == 2) {
+                } else if (listColor.get(i) == 2) {
                     paint.setColor(Color.GREEN);
-                } else if (color == 3) {
+                } else if (listColor.get(i) == 3) {
                     paint.setColor(Color.YELLOW);
-                } else if (color == 4) {
+                } else if (listColor.get(i) == 4) {
                     paint.setColor(Color.MAGENTA);
-                } else if (color == 5) {
+                } else if (listColor.get(i) == 5) {
                     paint.setColor(Color.CYAN);
                 }
                 canvas.drawCircle(this.listDot.get(i).getCenterX(), this.listDot.get(i).getCenterY(), this.listDot.get(i).getRadius(), paint);
@@ -59,8 +60,9 @@ public class DotView extends View {
         }
     }
 
-    public void setDot(List<Dot> listDot) {
+    public void setDot(List<Dot> listDot, List<Integer> listColor) {
         this.listDot = listDot;
+        this.listColor = listColor;
     }
 
 }

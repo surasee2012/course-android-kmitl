@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity implements Dot.OnDotChangedL
     private DotView dotView;
     private Dot dot;
     private List<Dot> listDot;
+    private List<Integer> listColor;
 
 
     @Override
@@ -26,27 +27,30 @@ public class MainActivity extends AppCompatActivity implements Dot.OnDotChangedL
         dotView = (DotView) findViewById(R.id.dotView);
         dot = new Dot(this,0,0,30);
         listDot = new ArrayList<>();
+        listColor =  new ArrayList<>();
     }
 
     @Override
     public void onDotChanged(Dot dot) {
-        dotView.setDot(listDot);
+        dotView.setDot(listDot, listColor);
         dotView.invalidate();
     }
 
     public void onRandomDot(View view) {
         Random random = new Random();
+        int color = random.nextInt(6);
+        listColor.add(color);
         int centerX = random.nextInt(1400);
         int centerY = random.nextInt(1800);
         int radius = random.nextInt(100);
-//        this.dot.setCenterX(centerX);
-//        this.dot.setCenterY(centerY);
         dot = new Dot(this,centerX,centerY,radius+30);
         listDot.add(dot);
     }
 
     public void onClearDot(View view) {
         listDot.clear();
+        dotView.setDot(listDot, listColor);
+        dotView.invalidate();
     }
 
 }

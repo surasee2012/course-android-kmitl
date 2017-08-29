@@ -52,6 +52,7 @@ public class Dot {
 
     public void setRadius(int radius) {
         this.radius = radius;
+        this.listener.onDotChanged(this);
     }
 
     public OnDotChangedListener getListener() {
