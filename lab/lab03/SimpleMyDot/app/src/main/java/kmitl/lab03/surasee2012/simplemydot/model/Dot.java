@@ -1,5 +1,7 @@
 package kmitl.lab03.surasee2012.simplemydot.model;
 
+import java.util.List;
+
 /**
  * Created by Gun on 8/25/2017.
  */
@@ -17,6 +19,7 @@ public class Dot {
         this.centerX = centerX;
         this.centerY = centerY;
         this.radius = radius;
+        this.listener.onDotChanged(this);
     }
 
     public Dot(int centerX, int centerY, int radius) {

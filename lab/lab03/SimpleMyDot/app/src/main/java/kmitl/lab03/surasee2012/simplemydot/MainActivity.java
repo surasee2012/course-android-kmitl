@@ -3,8 +3,9 @@ package kmitl.lab03.surasee2012.simplemydot;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import kmitl.lab03.surasee2012.simplemydot.model.Dot;
@@ -14,6 +15,7 @@ public class MainActivity extends AppCompatActivity implements Dot.OnDotChangedL
 
     private DotView dotView;
     private Dot dot;
+    private List<Dot> listDot;
 
 
     @Override
@@ -23,19 +25,28 @@ public class MainActivity extends AppCompatActivity implements Dot.OnDotChangedL
 
         dotView = (DotView) findViewById(R.id.dotView);
         dot = new Dot(this,0,0,30);
+        listDot = new ArrayList<>();
+    }
+
+    @Override
+    public void onDotChanged(Dot dot) {
+        dotView.setDot(listDot);
+        dotView.invalidate();
     }
 
     public void onRandomDot(View view) {
         Random random = new Random();
         int centerX = random.nextInt(1400);
         int centerY = random.nextInt(1800);
-        this.dot.setCenterX(centerX);
-        this.dot.setCenterY(centerY);
+        int radius = random.nextInt(100);
+//        this.dot.setCenterX(centerX);
+//        this.dot.setCenterY(centerY);
+        dot = new Dot(this,centerX,centerY,radius+30);
+        listDot.add(dot);
     }
 
-    @Override
-    public void onDotChanged(Dot dot) {
-        dotView.setDot(dot);
-        dotView.invalidate();
+    public void onClearDot(View view) {
+        listDot.clear();
     }
+
 }
