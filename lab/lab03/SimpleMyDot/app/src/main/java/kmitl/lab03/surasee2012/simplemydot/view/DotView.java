@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Random;
 
 import kmitl.lab03.surasee2012.simplemydot.model.Dot;
+import kmitl.lab03.surasee2012.simplemydot.model.DotGroup;
 
 /**
  * Created by Gun on 8/25/2017.
@@ -19,8 +20,7 @@ import kmitl.lab03.surasee2012.simplemydot.model.Dot;
 
 public class DotView extends View {
     private Paint paint;
-    private List<Dot> listDot;
-    private List<Integer> listColor;
+    private DotGroup dotGroup;
 
     public DotView(Context context) {
         super(context);
@@ -40,29 +40,30 @@ public class DotView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (this.listDot != null && this.listColor != null) {
-            for (int i=0;i<this.listDot.size();i++) {
-                if (listColor.get(i) == 0) {
+        if (this.dotGroup != null) {
+            for (int i=0;i<this.dotGroup.getDotList().size();i++) {
+                if (this.dotGroup.getColorList().get(i) == 0) {
                     paint.setColor(Color.RED);
-                } else if (listColor.get(i) == 1) {
+                } else if (this.dotGroup.getColorList().get(i) == 1) {
                     paint.setColor(Color.BLUE);
-                } else if (listColor.get(i) == 2) {
+                } else if (this.dotGroup.getColorList().get(i) == 2) {
                     paint.setColor(Color.GREEN);
-                } else if (listColor.get(i) == 3) {
+                } else if (this.dotGroup.getColorList().get(i) == 3) {
                     paint.setColor(Color.YELLOW);
-                } else if (listColor.get(i) == 4) {
+                } else if (this.dotGroup.getColorList().get(i) == 4) {
                     paint.setColor(Color.MAGENTA);
-                } else if (listColor.get(i) == 5) {
+                } else if (this.dotGroup.getColorList().get(i) == 5) {
                     paint.setColor(Color.CYAN);
                 }
-                canvas.drawCircle(this.listDot.get(i).getCenterX(), this.listDot.get(i).getCenterY(), this.listDot.get(i).getRadius(), paint);
+                canvas.drawCircle(this.dotGroup.getDotList().get(i).getCenterX(),
+                        this.dotGroup.getDotList().get(i).getCenterY(),
+                        this.dotGroup.getDotList().get(i).getRadius(), paint);
             }
         }
     }
 
-    public void setDot(List<Dot> listDot, List<Integer> listColor) {
-        this.listDot = listDot;
-        this.listColor = listColor;
+    public void setDot(DotGroup dotGroup) {
+        this.dotGroup = dotGroup;
     }
 
 }
