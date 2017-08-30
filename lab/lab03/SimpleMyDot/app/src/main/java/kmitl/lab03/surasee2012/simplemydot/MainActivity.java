@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements DotGroup.OnDotGro
         int centerX = random.nextInt(1400);
         int centerY = random.nextInt(2000);
         int radius = random.nextInt(100);
-        Dot dot = new Dot(centerX, centerY, radius+30);
+        Dot dot = new Dot(centerX, centerY, radius + 30);
         dotGroup.add(dot, colorNum);
     }
 
@@ -42,9 +42,14 @@ public class MainActivity extends AppCompatActivity implements DotGroup.OnDotGro
         dotGroup.clear();
     }
 
+    public void onUndo(View view) {
+        dotGroup.undo();
+    }
+
     @Override
     public void onDotGroupChanged(DotGroup dotGroup) {
         dotView.setDot(this.dotGroup);
         dotView.invalidate();
     }
+
 }

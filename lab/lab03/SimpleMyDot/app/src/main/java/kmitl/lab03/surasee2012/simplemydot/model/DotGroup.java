@@ -16,16 +16,22 @@ public class DotGroup {
 
     private List<Dot> dotList;
     private List<Integer> colorList;
+    private List<Dot> backupDotList;
+    private List<Integer> backupColorList;
 
     public DotGroup(OnDotGroupChangedListener listener, List<Dot> dotList, List<Integer> colorList) {
         this.dotList = dotList;
         this.colorList = colorList;
+        this.backupDotList = new ArrayList<>();
+        this.backupColorList = new ArrayList<>();
         this.listener = listener;
     }
 
     public DotGroup(OnDotGroupChangedListener listener) {
         this.dotList = new ArrayList<>();
         this.colorList = new ArrayList<>();
+        this.backupDotList = new ArrayList<>();
+        this.backupColorList = new ArrayList<>();
         this.listener = listener;
     }
 
@@ -45,6 +51,22 @@ public class DotGroup {
         this.colorList = colorList;
     }
 
+    public List<Dot> getBackupDotList() {
+        return backupDotList;
+    }
+
+    public void setBackupDotList(List<Dot> backupDotList) {
+        backupDotList = backupDotList;
+    }
+
+    public List<Integer> getBackupColorList() {
+        return backupColorList;
+    }
+
+    public void setBackupColorList(List<Integer> backupColorList) {
+        backupColorList = backupColorList;
+    }
+
     public void add(Dot dot, Integer colorNum) {
         dotList.add(dot);
         colorList.add(colorNum);
@@ -52,8 +74,23 @@ public class DotGroup {
     }
 
     public void clear() {
+        backupDotList = new ArrayList<>(dotList);
+        backupColorList = new ArrayList<>(colorList);
         dotList.clear();
         colorList.clear();
+        this.listener.onDotGroupChanged(this);
+    }
+
+    public void undo() {
+        if (dotList.isEmpty()) {
+            dotList = new ArrayList<>(backupDotList);
+            colorList = new ArrayList<>(backupColorList);
+            backupDotList.clear();
+            backupColorList.clear();
+        } else {
+            dotList.remove(dotList.size() - 1);
+            colorList.remove(colorList.size() - 1);
+        }
         this.listener.onDotGroupChanged(this);
     }
 
