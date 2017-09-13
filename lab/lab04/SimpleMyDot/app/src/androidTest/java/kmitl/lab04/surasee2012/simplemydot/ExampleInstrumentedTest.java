@@ -1,4 +1,4 @@
-package kmitl.lab03.surasee2012.simplemydot;
+package kmitl.lab04.surasee2012.simplemydot;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

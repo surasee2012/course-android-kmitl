@@ -1,4 +1,4 @@
-package kmitl.lab03.surasee2012.simplemydot.model;
+package kmitl.lab04.surasee2012.simplemydot.model;
 
 import android.graphics.Bitmap;
 import android.view.View;

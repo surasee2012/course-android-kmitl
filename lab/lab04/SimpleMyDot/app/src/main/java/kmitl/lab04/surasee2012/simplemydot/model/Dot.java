@@ -1,6 +1,4 @@
-package kmitl.lab03.surasee2012.simplemydot.model;
-
-import java.util.List;
+package kmitl.lab04.surasee2012.simplemydot.model;
 
 /**
  * Created by Gun on 8/25/2017.

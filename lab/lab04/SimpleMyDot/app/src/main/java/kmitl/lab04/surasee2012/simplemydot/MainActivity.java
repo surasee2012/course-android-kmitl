@@ -1,28 +1,22 @@
-package kmitl.lab03.surasee2012.simplemydot;
+package kmitl.lab04.surasee2012.simplemydot;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
-import kmitl.lab03.surasee2012.simplemydot.model.Dot;
-import kmitl.lab03.surasee2012.simplemydot.model.DotGroup;
-import kmitl.lab03.surasee2012.simplemydot.model.Screenshot;
-import kmitl.lab03.surasee2012.simplemydot.view.DotView;
+import kmitl.lab04.surasee2012.simplemydot.model.Dot;
+import kmitl.lab04.surasee2012.simplemydot.model.DotGroup;
+import kmitl.lab04.surasee2012.simplemydot.model.Screenshot;
+import kmitl.lab04.surasee2012.simplemydot.view.DotView;
 
 public class MainActivity extends AppCompatActivity implements DotGroup.OnDotGroupChangedListener,
         DotView.OnDotViewPressListener {

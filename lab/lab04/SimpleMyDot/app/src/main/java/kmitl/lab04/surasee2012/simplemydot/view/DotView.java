@@ -1,4 +1,4 @@
-package kmitl.lab03.surasee2012.simplemydot.view;
+package kmitl.lab04.surasee2012.simplemydot.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,11 +9,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import java.util.List;
-import java.util.Random;
-
-import kmitl.lab03.surasee2012.simplemydot.model.Dot;
-import kmitl.lab03.surasee2012.simplemydot.model.DotGroup;
+import kmitl.lab04.surasee2012.simplemydot.model.DotGroup;
 
 /**
  * Created by Gun on 8/25/2017.

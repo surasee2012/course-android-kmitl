@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main"
-    tools:context="kmitl.lab03.surasee2012.simplemydot.MainActivity">
+    tools:context="kmitl.lab04.surasee2012.simplemydot.MainActivity">
 
     <Button
         android:id="@+id/button"
@@ -55,7 +55,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp" />
 
-    <kmitl.lab03.surasee2012.simplemydot.view.DotView
+    <kmitl.lab04.surasee2012.simplemydot.view.DotView
         android:id="@+id/dotView"
         android:layout_width="0dp"
         android:layout_height="0dp"
