@@ -12,6 +12,7 @@ public class UserProfile {
     private String follower;
     private String bio;
     private String urlProfile;
+    private Posts[] posts;
 
     public String getUser() {
         return user;
@@ -59,5 +60,13 @@ public class UserProfile {
 
     public void setUrlProfile(String urlProfile) {
         this.urlProfile = urlProfile;
+    }
+
+    public Posts[] getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Posts[] posts) {
+        this.posts = posts;
     }
 }

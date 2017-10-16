@@ -4,12 +4,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 
 import kmitl.lab07.surasee2012.mylazyinstagram.adapter.PostAdapter;
 import kmitl.lab07.surasee2012.mylazyinstagram.api.LazyInstagramApi;
@@ -20,7 +19,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getUserProfile("cartoon");
+        getUserProfile("android");
 
         PostAdapter postAdapter = new PostAdapter(this);
         RecyclerView recyclerView = findViewById(R.id.list);
@@ -63,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
                     TextView textBio = findViewById(R.id.textBio);
                     ImageView imageProfile = findViewById(R.id.imageProfile);
 
-                    textUser.setText("@"+userProfile.getUser());
+//                    textUser.setText("@"+userProfile.getUser());
+                    textUser.setText(userProfile.getPosts()[0].getUrl());
                     textPost.setText("Post\n"+userProfile.getPost());
                     textFollowing.setText("Following\n"+userProfile.getFollowing());
                     textFollower.setText("Follower\n"+userProfile.getFollower());
@@ -79,4 +78,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    int numCheck = 1;
+
+    public void onChangeUser(View view) {
+        String profile = "";
+        if (numCheck == 1) {
+            profile = "nature";
+            numCheck++;
+        } else if (numCheck == 2) {
+            profile = "cartoon";
+            numCheck++;
+        } else if (numCheck == 3) {
+            profile = "android";
+            numCheck = 1;
+        }
+        getUserProfile(profile);
+
+    }
 }
