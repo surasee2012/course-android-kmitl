@@ -11,7 +11,6 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import kmitl.lab07.surasee2012.mylazyinstagram.MainActivity;
 import kmitl.lab07.surasee2012.mylazyinstagram.R;
 import kmitl.lab07.surasee2012.mylazyinstagram.api.UserProfile;
 
@@ -32,25 +31,16 @@ class Holder extends RecyclerView.ViewHolder {
 
 public class PostAdapter extends RecyclerView.Adapter<Holder> {
 
-//    String[] data = {"http://api.learn2crack.com/android/images/eclair.png"
-//            , "http://api.learn2crack.com/android/images/ginger.png"
-//            , "http://api.learn2crack.com/android/images/icecream.png"
-//            , "http://api.learn2crack.com/android/images/kitkat.png"
-//            , "http://api.learn2crack.com/android/images/marshmallow.png"
-//    };
-
     ArrayList<String> data;
 
     Context context;
 
-    public PostAdapter(Context context) {
+    public PostAdapter(Context context, UserProfile userProfile) {
         this.context = context;
-        UserProfile userProfile = response.body();
         data = new ArrayList<>();
-        data.add(userProfile.getPosts()[0].getUrl());
-//        for (int i=0;i<3;i++) {
-//            data.add(userProfile.getPosts()[i].getUrl());
-//        }
+        for (int i=0;i<userProfile.getPosts().length;i++) {
+            data.add(userProfile.getPosts()[i].getUrl());
+        }
     }
 
     @Override
@@ -70,16 +60,6 @@ public class PostAdapter extends RecyclerView.Adapter<Holder> {
     @Override
     public int getItemCount() {
         return data.size();
-    }
-
-    public void changeUser(String profile) {
-        if (profile.equals("android")) {
-
-        } else if (profile.equals("nature")) {
-
-        } else if (profile.equals("cartoon")) {
-
-        }
     }
 
 }

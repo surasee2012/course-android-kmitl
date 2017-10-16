@@ -1,5 +1,6 @@
 package kmitl.lab07.surasee2012.mylazyinstagram;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,18 +23,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
+    Context context = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         getUserProfile("android");
-
-        PostAdapter postAdapter = new PostAdapter(this);
-        RecyclerView recyclerView = findViewById(R.id.list);
-
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        recyclerView.setAdapter(postAdapter);
     }
 
     private void getUserProfile(String usrName) {
@@ -61,13 +58,19 @@ public class MainActivity extends AppCompatActivity {
                     TextView textBio = findViewById(R.id.textBio);
                     ImageView imageProfile = findViewById(R.id.imageProfile);
 
-//                    textUser.setText("@"+userProfile.getUser());
-                    textUser.setText(userProfile.getPosts()[0].getUrl());
+                    textUser.setText("@"+userProfile.getUser());
+//                    textUser.setText(userProfile.getPosts()[0].getUrl());
                     textPost.setText("Post\n"+userProfile.getPost());
                     textFollowing.setText("Following\n"+userProfile.getFollowing());
                     textFollower.setText("Follower\n"+userProfile.getFollower());
                     textBio.setText(userProfile.getBio());
                     Glide.with(MainActivity.this).load(userProfile.getUrlProfile()).into(imageProfile);
+
+                    PostAdapter postAdapter = new PostAdapter(context, userProfile);
+                    RecyclerView recyclerView = findViewById(R.id.list);
+
+                    recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
+                    recyclerView.setAdapter(postAdapter);
                 }
             }
 
@@ -93,6 +96,5 @@ public class MainActivity extends AppCompatActivity {
             numCheck = 1;
         }
         getUserProfile(profile);
-
     }
 }
