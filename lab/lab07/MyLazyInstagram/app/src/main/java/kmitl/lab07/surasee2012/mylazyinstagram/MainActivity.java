@@ -4,9 +4,13 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,14 +27,34 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Spinner select_id_spin;
     Context context = this;
+    private String user;
+    private String type_show = "grid";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getUserProfile("android");
+        select_id_spin = (Spinner) findViewById(R.id.spinner);
+        final String[] id_array = getResources().getStringArray(R.array.id_array);
+        ArrayAdapter<String> adapter= new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, id_array);
+        select_id_spin.setAdapter(adapter);
+
+        select_id_spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                user = id_array[position];
+                getUserProfile(user);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void getUserProfile(String usrName) {
@@ -51,25 +75,27 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     UserProfile userProfile = response.body();
 
-                    TextView textUser = findViewById(R.id.textUser);
                     TextView textPost = findViewById(R.id.textPost);
                     TextView textFollowing = findViewById(R.id.textFollowing);
                     TextView textFollower = findViewById(R.id.textFollower);
                     TextView textBio = findViewById(R.id.textBio);
                     ImageView imageProfile = findViewById(R.id.imageProfile);
 
-                    textUser.setText("@"+userProfile.getUser());
-//                    textUser.setText(userProfile.getPosts()[0].getUrl());
                     textPost.setText("Post\n"+userProfile.getPost());
                     textFollowing.setText("Following\n"+userProfile.getFollowing());
                     textFollower.setText("Follower\n"+userProfile.getFollower());
                     textBio.setText(userProfile.getBio());
                     Glide.with(MainActivity.this).load(userProfile.getUrlProfile()).into(imageProfile);
 
-                    PostAdapter postAdapter = new PostAdapter(context, userProfile);
+                    PostAdapter postAdapter = new PostAdapter(context, userProfile );
+                    postAdapter.setType_show(type_show);
                     RecyclerView recyclerView = findViewById(R.id.list);
 
-                    recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
+                    if(type_show.equals("grid")){
+                        recyclerView.setLayoutManager(new GridLayoutManager(context, 3));}
+                    if(type_show.equals("list")){
+                        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                    }
                     recyclerView.setAdapter(postAdapter);
                 }
             }
@@ -81,20 +107,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    int numCheck = 1;
+    public void onGrid(View view) {
+        getUserProfile(user);
+        type_show = "grid";
 
-    public void onChangeUser(View view) {
-        String profile = "";
-        if (numCheck == 1) {
-            profile = "nature";
-            numCheck++;
-        } else if (numCheck == 2) {
-            profile = "cartoon";
-            numCheck++;
-        } else if (numCheck == 3) {
-            profile = "android";
-            numCheck = 1;
-        }
-        getUserProfile(profile);
+    }
+
+    public void onList(View view) {
+        getUserProfile(user);
+        type_show = "list";
+
     }
 }

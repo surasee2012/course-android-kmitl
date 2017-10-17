@@ -19,51 +19,40 @@
         android:layout_marginStart="8dp" />
 
     <TextView
-        android:id="@+id/textUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:text="andriod"
-        app:layout_constraintLeft_toRightOf="@+id/imageProfile"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="8dp" />
-
-    <TextView
         android:id="@+id/textPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Post\n10"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/textUser"
         app:layout_constraintLeft_toRightOf="@+id/imageProfile"
         android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <TextView
         android:id="@+id/textFollowing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Following\n1"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/textUser"
         app:layout_constraintRight_toLeftOf="@+id/textFollower"
         android:layout_marginRight="8dp"
         app:layout_constraintLeft_toRightOf="@+id/textPost"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <TextView
         android:id="@+id/textFollower"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Follower\n1000000"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/textUser"
         android:layout_marginRight="40dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="40dp" />
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <TextView
         android:id="@+id/textBio"
@@ -77,18 +66,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.0" />
-
-    <Button
-        android:id="@+id/btChangeUser"
-        android:onClick="onChangeUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Change User"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
+        app:layout_constraintHorizontal_bias="0.0"
         android:layout_marginEnd="8dp" />
 
     <android.support.v7.widget.RecyclerView
@@ -103,8 +81,45 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="9dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/textBio" />
+        app:layout_constraintTop_toBottomOf="@+id/btnGrid" />
+
+    <ImageButton
+        android:id="@+id/btnGrid"
+        style="@android:style/Widget.ImageButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/grid2"
+        android:onClick="onGrid"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/textBio"
+        app:layout_constraintRight_toLeftOf="@+id/btnList"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnList"
+        style="@android:style/Widget.ImageButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/list2"
+        android:onClick="onList"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/textBio"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/btnGrid" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/imageProfile"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="0dp" />
+
+
 
 </android.support.constraint.ConstraintLayout>
