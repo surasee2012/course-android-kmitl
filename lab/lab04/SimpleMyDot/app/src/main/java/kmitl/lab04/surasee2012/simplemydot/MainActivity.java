@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements DotGroup.OnDotGro
         saveBitmap(b);
         File imagePath = new File(this.getCacheDir(), "images");
         File newFile = new File(imagePath, "image.png");
-        Uri contentUri = FileProvider.getUriForFile(this, "kmitl.lab03.surasee2012.simplemydot.fileprovider", newFile);
+        Uri contentUri = FileProvider.getUriForFile(this, "kmitl.lab04.surasee2012.simplemydot.fileprovider", newFile);
         if (contentUri != null) {
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
