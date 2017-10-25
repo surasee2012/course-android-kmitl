@@ -26,6 +26,8 @@ public class UserInfoListActivity extends AppCompatActivity {
 
     private MyAdapter adapter;
     private CommonSharePreference preference;
+    private UserInfoList suggestSearchList;
+    private UserInfoList userInfoList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class UserInfoListActivity extends AppCompatActivity {
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setAdapter(adapter);
 
-        UserInfoList suggestSearchList = (UserInfoList) preference.read(UserInfoListActivity.EXTTRA_LIST, UserInfoList.class);
+        suggestSearchList = (UserInfoList) preference.read(UserInfoListActivity.EXTTRA_LIST, UserInfoList.class);
         if (suggestSearchList != null) {
             displaySuggestsList(suggestSearchList.getUserInfoList());
         } else {
@@ -59,4 +61,15 @@ public class UserInfoListActivity extends AppCompatActivity {
 
     }
 
+    public void onClearList(View view) {
+        suggestSearchList.getUserInfoList().clear();
+        adapter.notifyDataSetChanged();
+        textNotFound.setVisibility(View.VISIBLE);
+        list.setVisibility(View.GONE);
+
+        userInfoList = new UserInfoList();
+        List<UserInfo> suggests = new ArrayList<>();
+        userInfoList.setUserInfoList(suggests);
+        preference.save(UserInfoListActivity.EXTTRA_LIST, userInfoList);
+    }
 }
