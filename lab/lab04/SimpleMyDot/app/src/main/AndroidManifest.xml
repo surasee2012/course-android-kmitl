@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="kmitl.lab04.surasee2012.simplemydot">
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -27,7 +28,4 @@
             </intent-filter>
         </activity>
     </application>
-    <provider android:authorities="com.facebook.app.FacebookContentProvider1546211492099011"
-        android:name="com.facebook.FacebookContentProvider"
-        android:exported="true" />
 </manifest>
