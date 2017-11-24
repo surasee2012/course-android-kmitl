@@ -27,31 +27,24 @@ public class MainActivity extends AppCompatActivity {
 
     private MoneyFlowDB database;
 
-    private TextView textMoney;
     private RecyclerView list;
     private TransactionAdapter adapter;
-    private Button btnAdd;
+
+    private TextView moneyTv;
+    private Button addBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initInstances();
-    }
+        database = Room.databaseBuilder(getApplicationContext(), MoneyFlowDB.class, "DB")
+                .fallbackToDestructiveMigration()
+                .build();
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        fetchData();
-    }
-
-    private void initInstances() {
-        initDB();
-
-        textMoney = findViewById(R.id.textMoney);
+        moneyTv = findViewById(R.id.moneyTv);
         list = findViewById(R.id.list);
-        btnAdd = findViewById(R.id.btnAdd);
+        addBtn = findViewById(R.id.addBtn);
 
         adapter = new TransactionAdapter(this);
         list.setLayoutManager(new LinearLayoutManager(this));
@@ -68,8 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 }));
-
-        btnAdd.setOnClickListener(new View.OnClickListener() {
+        addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startTransactionActivity(null);
@@ -77,19 +69,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void initDB() {
-        database = Room.databaseBuilder(getApplicationContext(), MoneyFlowDB.class, "DB")
-                .fallbackToDestructiveMigration()
-                .build();
-    }
-
-    private void startTransactionActivity(@Nullable Transaction transaction) {
-        Intent intent = new Intent(MainActivity.this, TransactionActivity.class);
-        intent.putExtra(Transaction.class.getSimpleName(), transaction);
-        startActivity(intent);
-    }
-
-    private void fetchData() {
+    @Override
+    protected void onResume() {
+        super.onResume();
         new FetchTransTask(database, new FetchTransTask.OnFetchSuccessListener() {
             @Override
             public void onFetchSuccess(List<Transaction> transactionList) {
@@ -105,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
         }).execute();
     }
 
+    private void startTransactionActivity(@Nullable Transaction transaction) {
+        Intent intent = new Intent(MainActivity.this, TransactionActivity.class);
+        intent.putExtra(Transaction.class.getSimpleName(), transaction);
+        startActivity(intent);
+    }
+
     private void updateList(List<Transaction> transactionList) {
         if (transactionList.size() == 0) {
             list.setVisibility(View.GONE);
@@ -118,14 +106,15 @@ public class MainActivity extends AppCompatActivity {
     private void updateMoney(Summary summary) {
         int sum = summary.getSum();
         int totalIncome = summary.getTotalIncome();
+        double moneyColor = (double) sum / totalIncome;
 
-        if ((float) sum / totalIncome <= 0.25) {
-            textMoney.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_light));
-        } else if ((float) sum / totalIncome <= 0.5) {
-            textMoney.setTextColor(ContextCompat.getColor(this, android.R.color.holo_orange_light));
+        if (moneyColor <= 0.25) {
+            moneyTv.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_light));
+        } else if (moneyColor <= 0.5) {
+            moneyTv.setTextColor(ContextCompat.getColor(this, android.R.color.holo_orange_light));
         } else {
-            textMoney.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_light));
+            moneyTv.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_light));
         }
-        textMoney.setText(NumberFormat.getNumberInstance().format(sum));
+        moneyTv.setText(NumberFormat.getNumberInstance().format(sum));
     }
 }

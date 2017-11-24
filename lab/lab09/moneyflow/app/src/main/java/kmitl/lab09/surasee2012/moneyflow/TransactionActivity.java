@@ -21,42 +21,30 @@ public class TransactionActivity extends AppCompatActivity implements View.OnCli
     private Transaction mTransaction;
 
     private RadioGroup radioType;
-    private EditText etDescribe, etAmount;
-    private Button btnSave, btnDelete;
+    private EditText describeEt, amountEt;
+    private Button saveBtn, deleteBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
 
-        initInstances();
-    }
-
-    private void initInstances() {
-        initDB();
-
-        radioType = findViewById(R.id.radioType);
-        etDescribe = findViewById(R.id.etDescribe);
-        etAmount = findViewById(R.id.etAmount);
-        btnSave = findViewById(R.id.btnSave);
-        btnDelete = findViewById(R.id.btnDelete);
-
-        radioType.check(R.id.income); // default
-        btnSave.setOnClickListener(this);
-        btnDelete.setOnClickListener(this);
-
-        mTransaction = getIntent().getParcelableExtra(Transaction.class.getSimpleName());
-
-        setupInfo();
-    }
-
-    private void initDB() {
         database = Room.databaseBuilder(getApplicationContext(), MoneyFlowDB.class, "DB")
                 .fallbackToDestructiveMigration()
                 .build();
-    }
 
-    private void setupInfo() {
+        radioType = findViewById(R.id.radioType);
+        describeEt = findViewById(R.id.describeEt);
+        amountEt = findViewById(R.id.amountEt);
+        saveBtn = findViewById(R.id.saveBtn);
+        deleteBtn = findViewById(R.id.deleteBtn);
+
+        radioType.check(R.id.income); // default
+        saveBtn.setOnClickListener(this);
+        deleteBtn.setOnClickListener(this);
+
+        mTransaction = getIntent().getParcelableExtra(Transaction.class.getSimpleName());
+
         if (mTransaction != null) {
             setTitle(getString(R.string.title_edit));
             if (mTransaction.getType().equals(getString(R.string.type_income))) {
@@ -64,76 +52,68 @@ public class TransactionActivity extends AppCompatActivity implements View.OnCli
             } else {
                 radioType.check(R.id.outcome);
             }
-            etDescribe.setText(mTransaction.getDescribe());
-            etAmount.setText(String.valueOf(mTransaction.getAmount()));
-            btnDelete.setVisibility(View.VISIBLE);
+            describeEt.setText(mTransaction.getDescribe());
+            amountEt.setText(String.valueOf(mTransaction.getAmount()));
+            deleteBtn.setVisibility(View.VISIBLE);
         } else {
             setTitle(getString(R.string.title_add));
-            btnDelete.setVisibility(View.GONE);
+            deleteBtn.setVisibility(View.GONE);
         }
-    }
-
-    private void save() {
-        String type;
-        String describe;
-        int amount;
-
-        switch (radioType.getCheckedRadioButtonId()) {
-            case R.id.income:
-                type = getString(R.string.type_income);
-                break;
-            case R.id.outcome:
-                type = getString(R.string.type_outcome);
-                break;
-            default:
-                type = "";
-        }
-
-        describe = etDescribe.getText().toString();
-
-        try {
-            amount = Integer.parseInt(etAmount.getText().toString());
-        } catch (IllegalArgumentException ignore) {
-            Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        Transaction transaction = new Transaction(type, describe, amount);
-
-        if (mTransaction != null) {
-            mTransaction.updateInfo(transaction);
-            new UpdateTransTask(database, new UpdateTransTask.OnUpdateSuccessListener() {
-                @Override
-                public void onUpdateSuccess() {
-                    finish();
-                }
-            }).execute(mTransaction);
-
-        } else {
-            new AddTransTask(database, new AddTransTask.OnAddSuccessListener() {
-                @Override
-                public void onAddSuccess() {
-                    finish();
-                }
-            }).execute(transaction);
-        }
-    }
-
-    private void delete() {
-        new DeleteTransTask(database, new DeleteTransTask.OnDeleteSuccessListener() {
-            @Override
-            public void onDeleteSuccess() {
-                finish();
-            }
-        }).execute(mTransaction);
     }
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.btnSave) {
-            save();
-        } else if (view.getId() == R.id.btnDelete) {
-            delete();
+        if (view.getId() == R.id.saveBtn) {
+            String type;
+            String describe;
+            int amount;
+
+            switch (radioType.getCheckedRadioButtonId()) {
+                case R.id.income:
+                    type = getString(R.string.type_income);
+                    break;
+                case R.id.outcome:
+                    type = getString(R.string.type_outcome);
+                    break;
+                default:
+                    type = "";
+            }
+
+            describe = describeEt.getText().toString();
+
+            try {
+                amount = Integer.parseInt(amountEt.getText().toString());
+            } catch (IllegalArgumentException ignore) {
+                Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Transaction transaction = new Transaction(type, describe, amount);
+
+            if (mTransaction != null) {
+                mTransaction.updateInfo(transaction);
+                new UpdateTransTask(database, new UpdateTransTask.OnUpdateSuccessListener() {
+                    @Override
+                    public void onUpdateSuccess() {
+                        finish();
+                    }
+                }).execute(mTransaction);
+
+            } else {
+                new AddTransTask(database, new AddTransTask.OnAddSuccessListener() {
+                    @Override
+                    public void onAddSuccess() {
+                        finish();
+                    }
+                }).execute(transaction);
+            }
+        } else if (view.getId() == R.id.deleteBtn) {
+            new DeleteTransTask(database, new DeleteTransTask.OnDeleteSuccessListener() {
+                @Override
+                public void onDeleteSuccess() {
+                    finish();
+                }
+            }).execute(mTransaction);
         }
     }
 }
